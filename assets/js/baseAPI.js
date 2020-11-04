@@ -11,6 +11,4 @@ $.ajaxPrefilter(function (option) {
             }
         }
     }
-
-
 })

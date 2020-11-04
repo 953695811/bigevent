@@ -29,12 +29,12 @@ function getUserMsg() {
 }
 
 function userImg(res) {
-    $('#welcome').html(res.data.username)
+    $('#welcome').html(res.data.nickname)
     if (res.data.user_pic !== null) {
         $('.layui-nav-img').attr('src', res.data.user_pic)
         $('.text-avatar').hide()
     } else {
         $('.layui-nav-img').hide()
-        $('.text-avatar').html(res.data.username.charAt(0).toUpperCase())
+        $('.text-avatar').html(res.data.nickname.charAt(0).toUpperCase())
     }
 }
