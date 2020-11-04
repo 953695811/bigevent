@@ -1,5 +1,4 @@
 $(function () {
-    getUserMsg()
     $('#exit').on('click', function () {
         layer.confirm('确定退出吗？', {
             icon: 3,
@@ -11,6 +10,8 @@ $(function () {
             layer.close(index);
         });
     })
+    getUserMsg()
+    
 })
 
 function getUserMsg() {
@@ -22,12 +23,6 @@ function getUserMsg() {
                 return
             } else {
                 userImg(res)
-            }
-        },
-        complete: function (res) {
-            if (res.responseJSON.status !== 0 && res.responseJSON.message === '身份认证失败！') {
-                localStorage.removeItem('token')
-                location.href = '/login.html'
             }
         }
     })
