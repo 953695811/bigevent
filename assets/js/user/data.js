@@ -17,7 +17,6 @@ $(function () {
                 if(res.status!==0){
                     return layer.msg('获取用户信息失败')
                 }
-                console.log(res.data);
                 form.val('formData',res.data)
             }
         })
@@ -37,7 +36,10 @@ $(function () {
                 url:"/my/userinfo",
                 data:$(this).serialize(),
                 success:function(res){
-                    console.log(res);
+                    if(res.status!==0){
+                        return layer.msg(res.message)
+                    }
+                    layer.msg(res.message)
                     window.parent.getUserMsg()
                 }
             })
