@@ -2,7 +2,7 @@ $(function () {
     //定义默认的发送ajax对象
     var q = {
         pagenum: 1,
-        pagesize: 5,
+        pagesize: 2,
         cate_id: '',
         state: ''
     }
@@ -22,7 +22,7 @@ $(function () {
         ss = ss < 10 ? ('0' + ss) : ss;
         return y + '/' + m + '/' + d + '--' + hh + ':' + mm + ':' + ss;
     }
-
+    getList()
     // 渲染列表界面
     function getList() {
         $.ajax({
@@ -37,8 +37,6 @@ $(function () {
             }
         })
     }
-
-
     // 更新分类列表
     function classall() {
         $.ajax({
@@ -51,7 +49,7 @@ $(function () {
             }
         })
     }
-    getList()
+
     classall()
 
     $('.layui-form').on('submit', function (e) {
@@ -89,14 +87,24 @@ $(function () {
 
     // 编辑文章
     $('body').on('click', '.btn-edit', function () {
-        var index = layer.confirm('该功能暂未开放', {
-            icon: 3,
-            title: '提示'})
-        
+        var id = $(this).attr('data-id')
+        $.ajax({
+            method: "GET",
+            url: '/my/article/' + id,
+            success: function (res) {
+                console.log(res.data);
+                var jsonStr = JSON.stringify(res.data)
+                localStorage.setItem('token1', jsonStr)
+                location.href = '/home/article/update.html'
+            }
+        })
+
     })
 
     // 删除文章
     $('body').on('click', '.btn-delete', function () {
+        var leng = $('.btn-delete').length
+        console.log(leng);
         var id = $(this).siblings().attr('data-id')
         var index = layer.confirm('确定删除吗？', {
             icon: 3,
@@ -112,6 +120,13 @@ $(function () {
                         return layui.layer.mes(res.message)
                     }
                     layui.layer.msg(res.message)
+                    // if (leng <= 1) {
+                    //     if(q.pagenum===1){
+                    //         break
+                    //     }else {
+                    //         q.pagenum--
+                    //     }
+                    // }
                     getList()
                 }
             })
